@@ -1,0 +1,1208 @@
+SET NAMES UTF8;
+DROP DATABASE IF EXISTS xz;
+CREATE DATABASE xz CHARSET=UTF8;
+USE xz;
+
+--------------用户信息表----------------------
+
+CREATE TABLE xz_login(
+	uid INT PRIMARY KEY AUTO_INCREMENT,
+	username VARCHAR(32),
+	password VARCHAR(32),
+	nickname VARCHAR(32),
+	name VARCHAR(32),
+	sex char(2),
+	year VARCHAR(32),
+	month VARCHAR(32),
+	day VARCHAR(32),
+	phone VARCHAR(32),
+	email VARCHAR(32)
+);
+INSERT INTO xz_login VALUES(10,'admin','123','小明','黎明','男','1996','06','20','17673261675','www.695343920@.com'),(11,'nihao','1234','小红','黄红','女','1999','06','20','13774722971','www.695123920@.com');
+SELECT * FROM xz_login;
+
+--------------用户地址表----------------------
+
+CREATE TABLE xz_address(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	uname VARCHAR(32),
+	phone VARCHAR(32),
+	shengfen VARCHAR(32),
+        city VARCHAR(32),
+	diqu VARCHAR(32),
+	context VARCHAR(32),
+	lid int , 
+	foreign key (lid) references xz_login(uid)
+
+);
+
+SELECT * FROM xz_address;
+
+--------------商品分类表----------------------
+
+CREATE TABLE xz_product_family(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	brand VARCHAR(16)
+);
+INSERT INTO xz_product_family VALUES(1,'点心');
+INSERT INTO xz_product_family VALUES(2,'蛋糕');
+INSERT INTO xz_product_family VALUES(3,'饼干');
+INSERT INTO xz_product_family VALUES(4,'熟食');
+INSERT INTO xz_product_family VALUES(5,'肉类');
+INSERT INTO xz_product_family VALUES(6,'素食');
+INSERT INTO xz_product_family VALUES(7,'卤味');
+INSERT INTO xz_product_family VALUES(8,'坚果');
+INSERT INTO xz_product_family VALUES(9,'炒货');
+INSERT INTO xz_product_family VALUES(10,'糖果');
+INSERT INTO xz_product_family VALUES(11,'蜜饯');
+INSERT INTO xz_product_family VALUES(12,'巧克力');
+INSERT INTO xz_product_family VALUES(13,'海味');
+INSERT INTO xz_product_family VALUES(14,'河鲜');
+INSERT INTO xz_product_family VALUES(15,'花茶');
+INSERT INTO xz_product_family VALUES(16,'果茶');
+INSERT INTO xz_product_family VALUES(17,'品牌');
+INSERT INTO xz_product_family VALUES(18,'礼包');
+SELECT * FROM xz_product_family;
+CREATE TABLE xz_product(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	`family_id` int(11) default NULL,
+	foreign key (family_id) references xz_product_family(id),
+	product VARCHAR(32)
+);
+INSERT INTO xz_product values(null,'1','蒸蛋糕');
+INSERT INTO xz_product values(null,'1','脱水蛋糕');
+INSERT INTO xz_product values(null,'1','瑞士糕');
+INSERT INTO xz_product values(null,'1','软面包');
+INSERT INTO xz_product values(null,'1','马卡龙');
+INSERT INTO xz_product values(null,'1','千层饼');
+INSERT INTO xz_product values(null,'1','甜甜圈');
+INSERT INTO xz_product values(null,'1','蒸三明治');
+INSERT INTO xz_product values(null,'1','铜锣烧');
+INSERT INTO xz_product values(null,'2','蒸蛋糕');
+INSERT INTO xz_product values(null,'2','脱水蛋糕');
+INSERT INTO xz_product values(null,'2','瑞士糕');
+INSERT INTO xz_product values(null,'2','软面包');
+INSERT INTO xz_product values(null,'2','马卡龙');
+INSERT INTO xz_product values(null,'2','千层饼');
+INSERT INTO xz_product values(null,'2','甜甜圈');
+INSERT INTO xz_product values(null,'2','蒸三明治');
+INSERT INTO xz_product values(null,'2','铜锣烧');
+INSERT INTO xz_product values(null,'3','蒸蛋糕');
+INSERT INTO xz_product values(null,'3','脱水蛋糕');
+INSERT INTO xz_product values(null,'3','瑞士糕');
+INSERT INTO xz_product values(null,'3','软面包');
+INSERT INTO xz_product values(null,'3','马卡龙');
+INSERT INTO xz_product values(null,'3','千层饼');
+INSERT INTO xz_product values(null,'3','甜甜圈');
+INSERT INTO xz_product values(null,'3','蒸三明治');
+INSERT INTO xz_product values(null,'3','铜锣烧');
+SELECT * FROM xz_product;
+
+--------------商品信息表----------------------
+
+CREATE TABLE xz_laptop(
+  `lid` int(11) NOT NULL auto_increment,
+  `product_id` int(11) default NULL,
+   foreign key (product_id) references xz_product(id),
+  `title` varchar(128) default NULL,
+   futitle varchar(128) default NULL,
+  `img` varchar(128) default NULL,
+  `price` decimal(10,2) default NULL,
+  `promise` varchar(64) default NULL,
+  `pinpai` varchar(64) default NULL,
+  `lname` varchar(32) default NULL,
+  `os` varchar(32) default NULL,
+  `memory` varchar(32) default NULL,
+  `resolution` varchar(32) default NULL,
+  `video_card` varchar(32) default NULL,
+  `cpu` varchar(32) default NULL,
+  `video_memory` varchar(32) default NULL,
+  `category` varchar(32) default NULL,
+  `disk` varchar(32) default NULL,
+  `details` varchar(1024) default NULL,
+   description varchar(1024) default NULL,
+   fenlei varchar(1024) default NULL,
+   xiaoliang varchar(108) default NULL,
+  `kucun` bigint(20) default NULL,
+   shuxing int(11) default NULL,
+  `is_onsale` tinyint(1) default NULL,
+  PRIMARY KEY  (`lid`)
+);
+INSERT INTO `xz_laptop` VALUES ('1', '1', '庞太太红豆面包手撕沙拉夹心奶酪全麦营养早餐零食品蛋糕整箱批发 ','健康紫米 甜而不腻 精心制作', 
+'<img src="../images/001.jpg" />', '10000.00', 
+'98.00',
+'盼盼', '烘烤类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'1213','999', '0', '1');
+INSERT INTO `xz_laptop` VALUES ('2', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '30.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'1000','999', '0', '1');
+INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/003.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'200','999', '0', '1');
+INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '20.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'13513','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '21.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'1584','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'121','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '22.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'126','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4868','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'54855','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4142','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'654','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'45544','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'5445','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'454','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'54584','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'78','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'546','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'46584','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'884','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '16.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'112','999', '0', '1');
+INSERT INTO `xz_laptop` VALUES ('null', '1', '真的有鱼','开年福利篇', 
+'<img src="../images/6.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'545','999', '1', '1');
+INSERT INTO `xz_laptop` VALUES ('null', '1', '囤货过冬','让爱早回家', 
+'<img src="../images/7.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'1212','999', '1', '1');
+INSERT INTO `xz_laptop` VALUES ('null', '1', '甜甜蜜蜜','浪漫情人节', 
+'<img src="../images/8.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'544','999', '1', '1');
+INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'6465','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'555','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4455','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'545','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'45','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'54','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'5445','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4545','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'1254','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'54546','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/002.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'545','999', '0', '1');
+INSERT INTO `xz_laptop` VALUES ('null', '1', '斯戈夫俄罗斯原装进口提拉米苏千层蛋糕奶油西式糕点零食点心500g','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/001.jpg" />', '56.90', 
+'98.00',
+'荣港', '清蒸', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'8464','999', '0', '1');
+INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/act3.png" />', '56.90', 
+'98.00',
+'甜品', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'45885','999', '0', '1');
+INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/act3.png" />', '56.90', 
+'98.00',
+'甜品', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'41512','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/act3.png" />', '56.90', 
+'98.00',
+'甜品', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'11222','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/act3.png" />', '56.90', 
+'98.00',
+'甜品', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'12231','999', '0', '1');
+INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'54544','999', '0', '1');
+INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'212','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'54544','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'54452','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'56465','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4541','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'45252','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'5415','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4552','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4555','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'45545','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'45455','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'54584','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4552','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'545552','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4555','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'7458','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'57565','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4755','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'45554','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'5545','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'54545','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4445','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4454','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'5455','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'45541','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'5444','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'5454','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'225','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'4441','999', '0', '1');INSERT INTO `xz_laptop` VALUES ('null', '1', '小优布丁','6寸蛋糕 香甜可口 原装进口 品质保证', 
+'<img src="../images/cp.jpg" />', '56.90', 
+'98.00',
+'海鲜', '果冻类', '巴基斯坦', '湖北省武汉市', 
+'进口松子 食用盐', '210g', '180天', 'GB/T 22165', 'QS4201 1801 0226', 
+'请放置于常温、阴凉、通风、干燥处保存...', '开袋去壳即可食用', 
+'<img src="../images/tw1.jpg" />
+<img src="../images/tw2.jpg" />	
+<img src="../images/tw3.jpg" />
+<img src="../images/tw4.jpg" />	
+<img src="../images/tw5.jpg" />
+<img src="../images/tw6.jpg" />
+<img src="../images/tw7.jpg" />',
+'内容',
+'44','999', '0', '1');
+SELECT * FROM xz_laptop;
+
+--------------商品图片表----------------------
+
+CREATE TABLE `xz_laptop_pic` (
+  `pid` int(11) NOT NULL auto_increment,
+  `laptop_id` int(11) default NULL,
+   foreign key (laptop_id) references xz_laptop(lid),
+  `sm` varchar(128) default NULL,
+  `md` varchar(128) default NULL,
+  `lg` varchar(128) default NULL,
+  PRIMARY KEY  (`pid`)
+);
+INSERT INTO `xz_laptop_pic` VALUES ('1', '1', '../images/001.jpg', '../images/001big.jpg', '../images/001small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('2', '2', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '3', '../images/003.jpg', '../images/003big.jpg', '../images/003small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '4', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '5', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '6', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '7', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '8', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '9', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '10', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '11', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '12', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '13', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '14', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '15', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '16', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '17', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '18', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '19', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '20', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '21', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '22', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '23', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '24', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '25', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '26', '../images/002.jpg', '../images/002big.jpg', '../images/002small.jpg');
+INSERT INTO `xz_laptop_pic` VALUES ('null', '27', '../images/cp.jpg', '../images/cp.jpg', '../images/cp.jpg');
+select * from xz_laptop;
+
+
+
+
+----------------------订单表-------------------
+
+CREATE TABLE xz_dingdan(
+	id int(11)  PRIMARY KEY auto_increment,
+	sid int(11) default NULL,
+	foreign key(sid) references xz_laptop(lid),
+	title varchar(128) default NULL,
+	futitle varchar(128) default NULL,
+	img varchar(128) default NULL,
+	kwei varchar(32) default NULL,
+	bz varchar(32) default NULL,
+	count varchar(128) default NULL,
+	price decimal(10,2) default NULL,
+	oldprice decimal(10,2) default NULL,
+	total decimal(10,2) default NULL
+	);
+
+insert into xz_dingdan values
+(1,1,'按时','你在地方可','<img src=1.jpg>','咖啡','包装','11','38.00','60.00','38.00');
+
+
+
+----------------------购物车表----------------------------
+
+
+CREATE TABLE xz_gouwuche(
+	id int(11)  PRIMARY KEY auto_increment,
+	gid int(11) default NULL,
+	foreign key(gid) references xz_laptop(lid),
+	uid varchar(64) default NULL,
+	title varchar(128) default NULL,
+	futitle varchar(128) default NULL,
+	img varchar(128) default NULL,
+	kwei varchar(32) default NULL,
+	bz varchar(32) default NULL,
+	count varchar(128) default NULL,
+	price decimal(10,2) default NULL,
+	oldprice decimal(10,2) default NULL,
+	total decimal(10,2) 
+	);
